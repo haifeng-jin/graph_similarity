@@ -79,8 +79,8 @@ class GraphCnn:
 
 
 def main():
-    all_data = load_data()
-    dataset = Dataset(all_data['NCI1'], 20, 10)
+    data = load_data('DD')
+    dataset = Dataset(data, 20, 10)
     cnn = GraphCnn(20, 10, 2, dataset)
     cnn.run()
 

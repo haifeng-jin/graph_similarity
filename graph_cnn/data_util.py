@@ -3,8 +3,8 @@ import math
 import numpy
 
 
-def load_data():
-    return pickle.load(open('data', 'rb'))
+def load_data(filename):
+    return pickle.load(open('../data/' + filename + '.graph', 'rb'))
 
 
 class Graph:
@@ -61,6 +61,9 @@ class Graph:
             return self.graph['node_labels'][a]
         return -2
 
+    """
+        Return a 3-d tensor (channel, row_num, col_num)
+    """
     def node_matrix(self):
         return [[list(map(self.get_label, line)) for line in self.neighbour_matrix]]
 
@@ -71,7 +74,10 @@ class Graph:
                 temp[(i, j)] = 0
         for u, line in enumerate(self.graph['adjacency_list']):
             for i, v in enumerate(line):
-                label = self.graph['edge_labels'][u][i]
+                if self.graph['edge_labels']:
+                    label = self.graph['edge_labels'][u][i]
+                else:
+                    label = 1
                 temp[(u, v)] = label
         ret = numpy.ndarray(shape=[self.w, self.k, self.k])
         for i, node in enumerate(self.selected):
