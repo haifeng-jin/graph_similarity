@@ -17,15 +17,6 @@ from keras.utils import np_utils
 import keras.backend as K
 
 
-def draw(matrix):
-    for line in matrix:
-        for digit in line:
-            if digit:
-                print(1, end='')
-            else:
-                print(0, end='')
-        print()
-
 batch_size = 128
 nb_classes = 10
 nb_epoch = 12
@@ -57,7 +48,6 @@ X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
 X_train /= 255
 X_test /= 255
-draw(X_test[0])
 print(y_test[0])
 print('X_train shape:', X_train.shape)
 print(X_train.shape[0], 'train samples')

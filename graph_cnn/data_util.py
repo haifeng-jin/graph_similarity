@@ -62,7 +62,7 @@ class Graph:
         return -2
 
     def node_matrix(self):
-        return [list(map(self.get_label, line)) for line in self.neighbour_matrix]
+        return [[list(map(self.get_label, line)) for line in self.neighbour_matrix]]
 
     def edge_matrix(self):
         temp = {}
@@ -76,8 +76,10 @@ class Graph:
         ret = numpy.ndarray(shape=[self.w, self.k, self.k])
         for i, node in enumerate(self.selected):
             for x, u in enumerate(self.neighbour_matrix[i]):
-                for y, v in enumerate(self.neighbour_matrix[i]):
-                    ret[i][x][y] = temp[(u, v)]
+                if u != -1:
+                    for y, v in enumerate(self.neighbour_matrix[i]):
+                        if v != -1:
+                            ret[i][x][y] = temp[(u, v)]
         return ret.reshape([self.w, self.k * self.k])
 
 

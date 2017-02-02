@@ -6,7 +6,7 @@ import pickle
 def make_flat(a):
     temp = []
     for elem in a:
-        if elem.size:
+        if len(elem):
             temp.append(list(elem[0].flatten()))
         else:
             temp.append([])
@@ -16,7 +16,7 @@ def make_flat(a):
 def construct_graph(graph, label):
     node_num = len(graph[0][0][0][0])
     ret = {'node_labels': graph[0][0][0][0].reshape(node_num),
-           'edge_labels': make_flat(graph[3][0][0][0]) if graph.size > 3 else [],
+           'edge_labels': make_flat(graph[3][0][0][0]) if len(graph) > 3 else [],
            'adjacency_list': make_flat(graph[2].flatten()),
            # 'adjacency_matrix': graph[1],
            'node_num': node_num,
@@ -43,10 +43,11 @@ def load_data(filename, index_flip):
         if index_flip:
             graph[0], graph[1] = graph[1], graph[0]
         ret.append(construct_graph(graph, labels[i]))
+    print(ret[0]['edge_labels'])
     return ret
 
 
-data_names = ['NCI1', 'NCI109', 'DD', 'MUTAG', 'ENZYMES']
+data_names = ['NCI1', 'NCI109']
 new_file = {}
 for index, name in enumerate(data_names):
     flip = False
